@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["vite.config.ts"],
+  "compilerOptions": { "resolveJsonModule": true },
+  "references": [{ "path": "packages/module-of-the-week" }]
+}

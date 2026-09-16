@@ -1,0 +1,33 @@
+packages:
+  - apps/*
+  - packages/*
+  - tools/*
+
+catalogMode: prefer
+
+catalog:
+  "@effect/sql-sqlite-node": 4.0.0-rc.115
+  "@effect/platform-node": 4.0.0-rc.115
+  "@effect/tsgo": ^0.45.0
+  "@types/node": ^24.13.3
+  effect: 4.0.0-rc.115
+  oxlint: 1.82.0
+  typescript: ^7.0.2
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+  vite-plus: 0.3.0
+  vitest: 4.1.11
+  sharp: ^0.35.4
+  effect-boxes: 0.17.2
+
+overrides:
+  effect: "catalog:"
+  # @effect/tsgo 0.45.0 supports Oxlint 1.81.0 and 1.82.0.
+  oxlint: 1.82.0
+  vite: "catalog:"
+  vitest: "catalog:"
+
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
