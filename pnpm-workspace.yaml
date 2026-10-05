@@ -6,11 +6,11 @@ packages:
 catalogMode: prefer
 
 catalog:
-  "@effect/sql-sqlite-node": 4.0.0-rc.115
-  "@effect/platform-node": 4.0.0-rc.115
+  "@effect/sql-sqlite-node": 4.0.0
+  "@effect/platform-node": 4.0.0
   "@effect/tsgo": ^0.45.0
-  "@types/node": ^24.13.3
-  effect: 4.0.0-rc.115
+  "@types/node": ^26.6.4
+  effect: 4.0.0
   oxlint: 1.82.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@0.3.0
