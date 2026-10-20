@@ -11,7 +11,6 @@ import { handleMessage, type SlackMessageEvent } from "./Slack.ts"
 const program = Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient
 
-  // Slack's `ts` looks like "1760918400.000100": seconds and microseconds
   let sequence = 0
   const nextTs = Effect.map(
     Clock.currentTimeMillis,
@@ -26,7 +25,6 @@ const program = Effect.gen(function* () {
       return event
     })
 
-  // Slack didn't get an answer in time, so it sends the same event again
   const retry = (event: SlackMessageEvent) =>
     Effect.gen(function* () {
       yield* Effect.log(`${event.channel} · (Slack retries ${event.user}'s message ${event.ts})`)
@@ -39,10 +37,8 @@ const program = Effect.gen(function* () {
   yield* post("#engineering", "Mattia", "It's flaky for me too")
   yield* post("#random", "Tim", "Is CI down?")
 
-  // Give the Dads time to think
   yield* Effect.sleep("8 seconds")
 
-  // A retry after Dad has already answered doesn't get a second joke either
   yield* retry(sebastian)
   yield* Effect.sleep("4 seconds")
 
@@ -62,9 +58,7 @@ const ClusterLayer = SingleRunner.layer({ runnerStorage: "memory" }).pipe(
 const MainLayer = DadLayer.pipe(
   Layer.provide(ServicesLayer),
   Layer.provideMerge(ClusterLayer),
-  // Cluster's tables and Dad's tables live in the same SQLite database
   Layer.provideMerge(DatabaseLayer),
 )
 
-// oxlint-disable-next-line effecttsgo/strict-effect-provide typescript/no-floating-promises
 program.pipe(Effect.provide(MainLayer), Effect.runPromise)
