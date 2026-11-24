@@ -1,4 +1,4 @@
-import { NodeServices } from "@effect/platform-node"
+import { NodeCrypto, NodeServices } from "@effect/platform-node"
 import { Clock, Effect, Layer } from "effect"
 import { ClusterWorkflowEngine, SingleRunner } from "effect/cluster"
 import { TellJokeLayer } from "./Workflow.ts"
@@ -54,7 +54,7 @@ const program = Effect.gen(function* () {
 const ServicesLayer = Layer.mergeAll(ChatLayer, PunGeneratorLayer)
 
 const ClusterLayer = SingleRunner.layer({ runnerStorage: "memory" }).pipe(
-  Layer.provide(NodeServices.layer),
+  Layer.provide([NodeServices.layer, NodeCrypto.layerDigest]),
 )
 
 const MainLayer = Layer.mergeAll(DadLayer, TellJokeLayer).pipe(
